@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id    Int     @default(autoincrement()) @id
+  email String  @unique
+  name  String?
+  password Int
+  kampania Kampania[]
+}
+
+model Kampania {
+  id        Int      @default(autoincrement()) @id
+  selectNet     String
+  text   String
+  inline Boolean? @default(false)
+  butStand String[]
+  butInl String[]
+  user    User?    @relation(fields: [userId], references: [id])
+  userId  Int?
+  socialNetwork   SocialNetwork[]
+  core    CoreKamp?    @relation(fields: [coreId], references: [id])
+  coreId  Int?
+}
+model CoreKamp{
+  id        Int      @default(autoincrement()) @id
+  name   String
+  kampania Kampania[]
+}
+
+model SocialNetwork {
+  id        Int      @default(autoincrement()) @id
+  name     String
+  maxButStand     Int?
+  maxLenStand   Int?
+  linkStand Boolean?
+  maxButInl Int?
+  maxLenInl Int?
+  linkInl    Boolean?
+  kampania    Kampania?    @relation(fields: [kampaniaId], references: [id])
+  kampaniaId  Int?
+
+}
