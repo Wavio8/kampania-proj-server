@@ -11,14 +11,23 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Kampania" (
     "id" SERIAL NOT NULL,
-    "selectNet" TEXT[],
+    "selectNet" TEXT NOT NULL,
     "text" TEXT NOT NULL,
     "inline" BOOLEAN DEFAULT false,
     "butStand" TEXT[],
     "butInl" TEXT[],
     "userId" INTEGER,
+    "coreId" INTEGER,
 
     CONSTRAINT "Kampania_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CoreKamp" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "CoreKamp_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -41,6 +50,9 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "Kampania" ADD CONSTRAINT "Kampania_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Kampania" ADD CONSTRAINT "Kampania_coreId_fkey" FOREIGN KEY ("coreId") REFERENCES "CoreKamp"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "SocialNetwork" ADD CONSTRAINT "SocialNetwork_kampaniaId_fkey" FOREIGN KEY ("kampaniaId") REFERENCES "Kampania"("id") ON DELETE SET NULL ON UPDATE CASCADE;

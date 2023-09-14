@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Kampania" ALTER COLUMN "selectNet" SET NOT NULL,
-ALTER COLUMN "selectNet" SET DATA TYPE TEXT;
